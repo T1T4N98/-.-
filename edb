@@ -1,0 +1,63 @@
+from typing import List
+
+def ssl(a: List[bool], k: int) -> List[bool]:
+    "Сдвиг влево с заполнением нулями (Shift Left Logical)"
+    return a[k:] + [False] * k
+
+def srl(a: List[bool], k: int) -> List[bool]:
+    "Сдвиг вправо с заполнением нулями (Shift Right Logical)"
+    return [False] * k + a[:-k]
+
+def slc(a: List[bool]) -> List[bool]:
+    "Сдвиг циклический (Shift Left Circular)"
+    if len(a) == 0:
+        return a
+    return a[1:] + [a[0]]
+
+def and_op(a: List[bool], b: List[bool]) -> List[bool]:
+    "Логическое И (AND)"
+    return [x and y for x, y in zip(a, b)]
+
+def or_op(a: List[bool], b: List[bool]) -> List[bool]:
+    "Логическое ИЛИ (OR)"
+    return [x or y for x, y in zip(a, b)]
+
+def xor_op(a: List[bool], b: List[bool]) -> List[bool]:
+    "Логическое исключающее ИЛИ (XOR)"
+    return [x != y for x, y in zip(a, b)]
+
+def xnor_op(a: List[bool], b: List[bool]) -> List[bool]:
+    "Логическое эквивалентность (XNOR)"
+    return [x == y for x, y in zip(a, b)]
+
+def impl(a: List[bool], b: List[bool]) -> List[bool]:
+    "Импликация (IMPL)"
+    return [not x or y for x, y in zip(a, b)]
+
+def flip(bit_string: List[bool]) -> List[bool]:
+    "Инвертировать все биты в строке"
+    return [not bit for bit in bit_string]
+
+def flip_at(bit_string: List[bool], position: int) -> List[bool]:
+    "Инвертировать бит в заданной позиции"
+    
+    if position < 0 or position >= len(bit_string):
+        raise IndexError("Position out of range")
+    flipped = bit_string[:]
+    flipped[position] = not flipped[position]
+    return flipped
+
+if __name__ == "__main__":
+    a = [True, False, True, False]
+    b = [False, True, False, True]
+
+    print("SSL:", ssl(a, 1))          
+    print("SRL:", srl(a, 1))          
+    print("SLC:", slc(a))             
+    print("AND:", and_op(a, b))       
+    print("OR:", or_op(a, b))         
+    print("XOR:", xor_op(a, b))       
+    print("XNOR:", xnor_op(a, b))     
+    print("IMPL:", impl(a, b))        
+    print("FLIP:", flip(a))           
+    print("FLIP AT 2:", flip_at(a, 2))
